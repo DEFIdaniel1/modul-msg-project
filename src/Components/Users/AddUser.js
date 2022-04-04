@@ -3,6 +3,7 @@ import Card from '../UI/Card';
 import classes from './AddUser.module.css';
 import Button from './Button';
 
+//Adds new user with username/age inputs and submit button
 const AddUser = (props) => {
     const addUserHandler = (event) => {
         event.preventDefault();
