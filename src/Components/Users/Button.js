@@ -3,9 +3,13 @@ import classes from "./Button.module.css";
 //template button to use with props imported
 //classes, button type to be passed through (default 'button' if none)
 
-const Button = props => {
+const Button = (props) => {
   return (
-    <button className={classes.button} type={props.type || 'button'}>
+    <button
+      className={classes.button}
+      type={props.type || "button"}
+      onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

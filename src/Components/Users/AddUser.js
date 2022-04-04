@@ -1,25 +1,59 @@
-import React from "react";
-import Card from '../UI/Card';
-import classes from './AddUser.module.css';
-import Button from './Button';
+import React, { useState } from "react";
+import Card from "../UI/Card";
+import classes from "./AddUser.module.css";
+import Button from "./Button";
 
 //Adds new user with username/age inputs and submit button
 const AddUser = (props) => {
-    const addUserHandler = (event) => {
-        event.preventDefault();
-    }
+  //add username state for input
+  const [enteredUserName, setEnteredUserName] = useState("");
+  const userNameChangeHandler = (event) => {
+    setEnteredUserName(event.target.value);
+  };
 
-    return (
-      <Card className={classes.input}>
-        <form onSubmit={addUserHandler}>
-          <label htmlFor="username">Username</label>
-          <input id="username" type="text" />
-          <label htmlFor="age">Age</label>
-          <input id="age" type="number" />
-          <Button type="submit">Add User</Button>
-        </form>
-      </Card>
-    );
+  //add age state for input
+  const [enteredAge, setEnteredAge] = useState("");
+  const ageChangeHandler = (event) => {
+    setEnteredAge(event.target.value);
+  };
+
+  const addUserHandler = (event) => {
+    event.preventDefault();
+    //will not submit if empty values
+    if (enteredAge.trim().length === 0 || enteredUserName.trim().length === 0) {
+      return;
+    }
+    //+forces it to be a number for +enteredAge
+    if (+enteredAge < 1) {
+      return;
+    }
+    console.log(enteredUserName, enteredAge);
+    //will 2-way bind and clear the form when entered
+    setEnteredAge("");
+    setEnteredUserName("");
+  };
+
+  return (
+    <Card className={classes.input}>
+      <form onSubmit={addUserHandler}>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          onChange={userNameChangeHandler}
+          value={enteredUserName}
+        />
+        <label htmlFor="age">Age</label>
+        <input
+          id="age"
+          type="number"
+          onChange={ageChangeHandler}
+          value={enteredAge}
+        />
+        <Button type="submit">Add User</Button>
+      </form>
+    </Card>
+  );
 };
 
 export default AddUser;
