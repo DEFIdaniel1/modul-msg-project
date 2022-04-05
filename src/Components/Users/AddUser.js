@@ -6,15 +6,16 @@ import classes from "./AddUser.module.css";
 import Button from "./Button";
 
 //Adds new user with username/age inputs and submit button
-const AddUser = props => {
-  //add username state for input
+const AddUser = (props) => {
+  //add username/age state for input
   const [enteredUserName, setEnteredUserName] = useState("");
+  const [enteredAge, setEnteredAge] = useState("");
+  //error state for ErrorModal
+  const [error, setError] = useState("");
+
   const userNameChangeHandler = (event) => {
     setEnteredUserName(event.target.value);
   };
-
-  //add age state for input
-  const [enteredAge, setEnteredAge] = useState("");
   const ageChangeHandler = (event) => {
     setEnteredAge(event.target.value);
   };
@@ -23,10 +24,18 @@ const AddUser = props => {
     event.preventDefault();
     //will not submit if empty values
     if (enteredAge.trim().length === 0 || enteredUserName.trim().length === 0) {
+      setError({
+        title: "Oopsie...",
+        message: "Looks like you're missing some information!",
+      });
       return;
     }
     //+forces it to be a number for +enteredAge logic to be > 1
     if (+enteredAge < 1) {
+      setError({
+        title: "Is it possible to be so young?",
+        message: "We need an age that's older than 0!",
+      });
       return;
     }
     //FROM APP.JS -> liftings state up
@@ -36,12 +45,20 @@ const AddUser = props => {
     setEnteredUserName("");
   };
 
+const errorHandler = () => {
+    setError(null);
+};
+
   return (
     <div>
-      <ErrorModal
-        title="Uh oh..."
-        message="That's embarrasing. Looks like there's been an error!"
-      />
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onClick={errorHandler}
+        />
+      )}
+      {/*logic is if error? output error modal */}
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
