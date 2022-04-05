@@ -4,7 +4,7 @@ import classes from "./AddUser.module.css";
 import Button from "./Button";
 
 //Adds new user with username/age inputs and submit button
-const AddUser = (props) => {
+const AddUser = props => {
   //add username state for input
   const [enteredUserName, setEnteredUserName] = useState("");
   const userNameChangeHandler = (event) => {
@@ -23,11 +23,12 @@ const AddUser = (props) => {
     if (enteredAge.trim().length === 0 || enteredUserName.trim().length === 0) {
       return;
     }
-    //+forces it to be a number for +enteredAge
+    //+forces it to be a number for +enteredAge logic to be > 1
     if (+enteredAge < 1) {
       return;
     }
-    console.log(enteredUserName, enteredAge);
+    //FROM APP.JS -> liftings state up
+    props.onAddUser(enteredUserName, enteredAge);
     //will 2-way bind and clear the form when entered
     setEnteredAge("");
     setEnteredUserName("");
